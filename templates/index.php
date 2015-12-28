@@ -35,7 +35,8 @@ $javascript = array(
     'pupnp-playlist.js',
     'pupnp-favorites.js',
     'pupnp-file.js',
-    'pupnp-filemanager.js',
+//    'pupnp-filemanager.js',	
+    'pupnp-videomanager.js',
     'pupnp.js',
     'bootstrap.min.js'
 );
@@ -52,34 +53,35 @@ $css = array(
 	<title>UPnP Browser</title>
 
 	<link href="res/jqueryui/css/custom-theme/jquery-ui-1.8.16.custom.css" rel="stylesheet" type="text/css"/>
-    <? if(Config::read('minify_css')): ?>
+    <?php if(Config::read('minify_css')): ?>
 
-        <link rel="stylesheet" type="text/css" href="resources.php?css=<?= join('|', $css) ?>" />
-    <? else: ?>
+        <link rel="stylesheet" type="text/css" href="resources.php?css=<?php echo join('|', $css) ?>" />
+		
+    <?php else: ?>
 
-        <? foreach($css as $cssfile): ?>
+        <?php foreach($css as $cssfile): ?>
 
-            <link rel="stylesheet" type="text/css" href="res/css/<?= $cssfile ?>" />
-        <? endforeach ?>
-    <? endif ?>
+            <link rel="stylesheet" type="text/css" href="res/css/<?php echo $cssfile ?>" />
+        <?php endforeach ?>
+    <?php endif ?>
 
 	<script src="res/js/jquery.min.js" type="text/javascript"></script>
 	<script src="res/jqueryui/js/jquery-ui-1.8.16.custom.min.js" type="text/javascript"></script>
 
-    <? if(Config::read('minify_js')): ?>
+    <?php if(Config::read('minify_js')): ?>
 
-        <script type="text/javascript" src="resources.php?js=<?= join('|', $javascript) ?>"></script>
-    <? else: ?>
+        <script type="text/javascript" src="resources.php?js=<?php echo join('|', $javascript) ?>"></script>
+    <?php else: ?>
 
-        <? foreach($javascript as $jsfile): ?>
+        <?php foreach($javascript as $jsfile): ?>
 
-            <script type="text/javascript" src="res/js/<?= $jsfile ?>"></script>
-        <? endforeach ?>
-    <? endif ?>
+            <script type="text/javascript" src="res/js/<?php echo $jsfile ?>"></script>
+        <?php endforeach ?>
+    <?php endif ?>
 </head>
 <body>
 
-<? require_once(dirname(__FILE__) . '/navigation.php') ?>
+<?php require_once(dirname(__FILE__) . '/navigation.php') ?>
 
 <div id="error" class="hidden"></div>
 
@@ -87,10 +89,10 @@ $css = array(
     <div class="container-fluid">
         <div class="row-fluid">
             <div class="span6" id="left">
-                <h2><?= _('Source') ?></h2>
+                <h2><?php echo _('Source') ?></h2>
 
                 <div class="deviceSelection" id="ds-src">
-                    <img src="res/images/icons/ajax-loader-small.gif" /> <?= _('Loading devices') ?>
+                    <img src="res/images/icons/ajax-loader-small.gif" /> <?php echo _('Loading devices') ?>
                 </div>
 
                 <div class="favorites" id="favorites"></div>
@@ -100,10 +102,10 @@ $css = array(
                 <div class="properties" id="p-src"></div>
             </div>
             <div class="span6" id="right">
-                <h2><?= _('Destination') ?></h2>
+                <h2><?php echo _('Destination') ?></h2>
 
                 <div class="deviceSelection" id="ds-dst">
-                    <img src="res/images/icons/ajax-loader-small.gif" /> <?= _('Loading devices') ?>
+                    <img src="res/images/icons/ajax-loader-small.gif" /> <?php echo _('Loading devices') ?>
                 </div>
 
                 <div class="desc" id="desc-dst"></div>

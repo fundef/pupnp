@@ -24,7 +24,8 @@ function UPnP() {
     this.backend        = new UPnPBackend();
     this.gui            = new UPnPGUI();
     this.favorites      = new UPnPFavorites();
-    this.filemanager    = new UPnPFileManager();
+//    this.filemanager    = new UPnPFileManager();
+    this.videomanager   = new UPnPVideoManager();
     this.playlist       = new UPnPPlaylist();
 }
 

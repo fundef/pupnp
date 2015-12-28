@@ -58,8 +58,9 @@ if(isset($_GET['image'])) {
 
     file_put_contents($temp, $binary);
 
+	//deprecated - needs fileinfo enabled in php.ini
     $mime = mime_content_type($temp);
-
+	
     $tmp = explode('/', $mime);
     $type = array_shift($tmp);
     $format = $tmp[0];

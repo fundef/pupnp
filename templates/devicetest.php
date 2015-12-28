@@ -279,80 +279,80 @@ try {
 </head>
 <body>
 
-<? require_once(dirname(__FILE__) . '/navigation.php') ?>
+<?php require_once(dirname(__FILE__) . '/navigation.php') ?>
 
 <div id="wrapper-all">
 
-    <? if(isset($error)) echo '<div id="error">' . $error . '</div>'; ?>
+    <?php if(isset($error)) echo '<div id="error">' . $error . '</div>'; ?>
 
     <div class="span5">
-        <h2><?= _('Devices') ?></h2>
+        <h2><?php echo _('Devices') ?></h2>
 
         <div class="desc">
             <ul id="devicelist">
-            <? foreach($deviceList as $uid => $dev): ?>
+            <?php foreach($deviceList as $uid => $dev): ?>
 
                 <li>
-                    <a href="?page=devicetest&d=<?= $uid ?>"<?= (!is_null($device) && $device->getId() == $uid ? ' class="active"' : '') ?>>
-                        <img src="resources.php?image=<?= urlencode($dev->icon) ?>&sq=30" />
-                        <?= $dev->name ?>
+                    <a href="?page=devicetest&d=<?php echo $uid ?>"<?php echo (!is_null($device) && $device->getId() == $uid ? ' class="active"' : '') ?>>
+                        <img src="resources.php?image=<?php echo urlencode($dev->icon) ?>&sq=30" />
+                        <?php echo $dev->name ?>
                     </a>
-                    <? if(!is_null($device) && $device->getId() == $uid): ?>
+                    <?php if(!is_null($device) && $device->getId() == $uid): ?>
                     <ul>
-                        <? foreach($services as $serv): ?>
+                        <?php foreach($services as $serv): ?>
                             <li>
-                                <a href="?page=devicetest&d=<?= $uid ?>&s=<?= $serv ?>"<?= (!is_null($serviceCode) && $serviceCode == $serv ? ' class="active"' : '') ?>><?= $serv ?></a>
-                                <? if(!is_null($serviceCode) && $serviceCode == $serv): ?>
+                                <a href="?page=devicetest&d=<?php echo $uid ?>&s=<?php echo $serv ?>"<?php echo (!is_null($serviceCode) && $serviceCode == $serv ? ' class="active"' : '') ?>><?php echo $serv ?></a>
+                                <?php if(!is_null($serviceCode) && $serviceCode == $serv): ?>
                                 <ul>
-                                    <? foreach($actions as $key => $data): ?>
+                                    <?php foreach($actions as $key => $data): ?>
                                         <li>
-                                            <a href="?page=devicetest&d=<?= $uid ?>&s=<?= $serv ?>&a=<?= $key ?>"<?= (!is_null($actionName) && $actionName == $key ? ' class="active"' : '') ?>><?= $key ?></a>
+                                            <a href="?page=devicetest&d=<?php echo $uid ?>&s=<?php echo $serv ?>&a=<?php echo $key ?>"<?php echo (!is_null($actionName) && $actionName == $key ? ' class="active"' : '') ?>><?php echo $key ?></a>
                                         </li>
-                                    <? endforeach ?>
+                                    <?php endforeach ?>
                                 </ul>
-                                <? endif ?>
+                                <?php endif ?>
                             </li>
-                        <? endforeach ?>
+                        <?php endforeach ?>
                     </ul>
-                    <? endif ?>
+                    <?php endif ?>
                 </li>
-            <? endforeach ?>
+            <?php endforeach ?>
             </ul>
         </div>
         <br class="clear" />
     </div>
 
-    <? if(!is_null($action)): ?>
+    <?php if(!is_null($action)): ?>
         <div id="right" class="span7">
 
-            <h2><?= $actionName ?></h2>
+            <h2><?php echo $actionName ?></h2>
 
-            <h2><?= _('Input') ?></h2>
+            <h2><?php echo _('Input') ?></h2>
 
             <div class="desc">
-                <?= _('Parameters') ?>:<br /><br />
+                <?php echo _('Parameters') ?>:<br /><br />
                 <form action="" method="post">
-                    <? if(!isset($action['in']) || count($action['in']) == 0): ?>
-                        <?= _('No request parameters') ?><br />
-                    <? else: ?>
+                    <?php if(!isset($action['in']) || count($action['in']) == 0): ?>
+                        <?php echo _('No request parameters') ?><br />
+                    <?php else: ?>
                         <table>
-                            <? foreach($action['in'] as $param): ?>
-                                <?= buildInputRow($param) ?>
-                            <? endforeach ?>
+                            <?php foreach($action['in'] as $param): ?>
+                                <?php echo buildInputRow($param) ?>
+                            <?php endforeach ?>
                         </table>
-                    <? endif ?>
+                    <?php endif ?>
                     <br />
-                    <input type="submit" name="send" value="<?= _('Invoke') ?>" />
+                    <input type="submit" name="send" value="<?php echo _('Invoke') ?>" />
                 </form>
             </div>
 
-            <? if(!is_null($response)): ?>
-            <h2><?= _('Output') ?></h2>
-            <textarea rows="12" cols="100" class="well"><?= formatXmlString($response) ?></textarea>
-            <? endif ?>
+            <?php if(!is_null($response)): ?>
+            <h2><?php echo _('Output') ?></h2>
+            <textarea rows="12" cols="100" class="well"><?php echo formatXmlString($response) ?></textarea>
+            <?php endif ?>
 
         </div>
-    <? endif ?>
+    <?php endif ?>
 
 </div>
 

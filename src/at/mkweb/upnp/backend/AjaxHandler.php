@@ -19,6 +19,7 @@
 namespace at\mkweb\upnp\backend;
 
 use at\mkweb\upnp\Logger;
+use at\mkweb\upnp\backend\sceneparser\SceneParser; //autoload?
 
 /**
 * Wrapper for simple data access using Ajax (JavaScript)
@@ -36,9 +37,9 @@ class AjaxHandler {
     }
 
 	public function call($method, $params) {
-
+	
         Logger::debug('New Request for method "' . $method . '" with params: ' . print_r($params, true), self::$logfile);
-
+ 
 		if(isset($params['callback'])) {
 
             Logger::debug('Got callback: ' . $params['callback'], self::$logfile);
@@ -53,7 +54,6 @@ class AjaxHandler {
             if(method_exists($this, $method)) {
 
                 if(!is_null($device)) {
-
                     Logger::debug('Triggering "' . $method . '" with device and params', self::$logfile);
                     $this->$method($device, $params);
                 } else {
@@ -63,14 +63,16 @@ class AjaxHandler {
                 }
             } else {
 
-                Logger::warn('Unknown method: ' . $method, self::$logfile);
+                Logger::debug('Unknown method: ' . $method, self::$logfile);
             }
         } catch (UPnPException $e) {
 
+		print_r($e->getMessage());
+		
             Logger::error('Exception occured: ' . $e->getMessage(), self::$logfile);
         }
 	}
-
+	
     public function startPlayFromPlaylist($device, Array $data) {
 
         Logger::debug('Starting ' . __METHOD__ . ' with data: ' . print_r($data, true), self::$logfile);
@@ -320,6 +322,62 @@ class AjaxHandler {
 		$this->respond($data);
 	}
 
+	public function searchVids($device, Array $data) { //shortcut to search with handy defaults
+
+        Logger::debug('Starting ' . __METHOD__ . ' with device "' . $device . '" and params ' . print_r($data, true), self::$logfile);
+
+		//$data['filter'] = 'res'; //should get just the URI but apparently need to get the whole lot
+		$data['filter'] = 'dc:title,res,@ID'; //doesn't seem to make a performance difference
+		$data['SearchCriteria'] = '(upnp:class derivedfrom "object.item.videoItem")'; //magic incantation
+		$data['ContainerID'] = '0'; //toplevel, just get them all
+		$data['SortCriteria'] = '+dc:date'; // dc:date but meaningless in reality
+		$data['RequestedCount'] = '100'; // self preservation	
+			
+		//call original search function
+		$this->search($device,$data);
+	}	
+
+	public function search($device, Array $data) {
+
+        Logger::debug('Starting ' . __METHOD__ . ' with device "' . $device . '" and params ' . print_r($data, true), self::$logfile);
+
+        try {
+
+            $device = UPnP::getDevice($device);
+            $client = $device->getClient('ContentDirectory');
+
+            $data = $client->Search($data);
+            Logger::debug('Got data: ' . json_encode($data), self::$logfile);
+
+            if(isset($data['Result'])) {
+
+                $data['Result'] = $this->prepareMetaData($data['Result']);
+				
+            }
+        } catch (UPnPException $e) {
+
+            Logger::error('Got Exception: ' . $e->getMessage(), self::$logfile);
+        }
+
+        Logger::debug('Finished ' . __METHOD__, self::$logfile);
+
+		//do something with sceneparser here
+		foreach($data['Result'] as &$item) {
+                if(!is_array($item)) {
+                    continue;
+                }
+				if( !isset($item['title']) && !is_string($item['title']) ) {
+					continue;
+				}
+
+				$parser = new SceneParser($item['title']);
+				$item['title'] = $parser->getTitle();
+		}
+		
+		$this->respond($data);
+	}	
+	
+	
 	public function getProtocolInfo($device) {
 
         Logger::debug(__METHOD__, self::$logfile);

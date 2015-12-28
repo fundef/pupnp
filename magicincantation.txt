@@ -1,0 +1,1 @@
+http://10.0.0.66/WCP/pupnp/backend.php?device=uuid:4d696e69-444c-164e-9d41-18a905da51fc&action=Search&ContainerID=0&filter=res&SearchCriteria=%28upnp%3Aclass+derivedfrom+%22object.item.videoItem%22%29&SortCriteria=+dc:date

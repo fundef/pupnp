@@ -76,7 +76,11 @@ function UPnPBackend() {
 
 					if(undefined != response.error) {
 
-						setError(response.error);
+						//setError(response.error);  skipping this for now as this wasn't caught before
+						alert(response.error); //definetly won't forget this :-p
+						//upnp.gui.setError(upnp.gui.i18n('00ps ' + response.error));
+						
+						
 					} else {
 
 						if(undefined != callback) {

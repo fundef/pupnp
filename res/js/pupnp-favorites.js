@@ -59,10 +59,10 @@ function UPnPFavorites() {
                             var deviceId, objectId;
                             with(upnp.favorites.favorites[uid]) {
 
-                                upnp.filemanager.breadcrumps = eval('(' + breadcrumps + ')');
+                                upnp.videomanager.breadcrumps = eval('(' + breadcrumps + ')');
 
                                 $('#device-src').val(deviceId);
-                                upnp.filemanager.load($('#device-src').val(), objectId);
+                                upnp.videomanager.load($('#device-src').val(), objectId);
 
                                 upnp.gui.srcDevice = upnp.gui.devices[$('#device-src').val()];
 
@@ -85,7 +85,7 @@ function UPnPFavorites() {
 
     this.isFavorite = function(deviceUid, objectId) {
 
-        var uid = upnp.filemanager.deviceUid + '---' + upnp.filemanager.containerId;
+        var uid = upnp.videomanager.deviceUid + '---' + upnp.videomanager.containerId;
 
         return !(undefined == this.favorites[uid]);
     }
@@ -106,15 +106,15 @@ function UPnPFavorites() {
     this.add = function() {
 
         var device = upnp.gui.srcDevice;
-        var uid = device.getUid() + '---' + upnp.filemanager.containerId;
+        var uid = device.getUid() + '---' + upnp.videomanager.containerId;
 
         var path = '';
-        for(var i in upnp.filemanager.breadcrumps) {
+        for(var i in upnp.videomanager.breadcrumps) {
 
-            path += '/' + upnp.filemanager.breadcrumps[i];
+            path += '/' + upnp.videomanager.breadcrumps[i];
         }
 
-        var data = 'deviceId=' + device.getUid() + '&deviceName=' + device.getName() + '&objectId=' + upnp.filemanager.containerId + '&path=' + path + '&breadcrumps=' + json_encode(upnp.filemanager.breadcrumps).split('&').join('%26');
+        var data = 'deviceId=' + device.getUid() + '&deviceName=' + device.getName() + '&objectId=' + upnp.videomanager.containerId + '&path=' + path + '&breadcrumps=' + json_encode(upnp.videomanager.breadcrumps).split('&').join('%26');
 
         upnp.backend.call(null, 'addFavorite', data, function(res) {
 
@@ -124,7 +124,7 @@ function UPnPFavorites() {
 
     this.remove = function() {
 
-        var uid = upnp.gui.srcDevice.getUid() + '---' + upnp.filemanager.containerId;
+        var uid = upnp.gui.srcDevice.getUid() + '---' + upnp.videomanager.containerId;
 
         upnp.backend.call(null, 'removeFavorite', 'uid=' + uid, function(res) {
 

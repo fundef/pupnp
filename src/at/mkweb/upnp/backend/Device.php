@@ -147,7 +147,6 @@ class Device {
     * @return array
     */
     public function getServices() {
-
         return array_keys($this->services);
     }
 
@@ -159,7 +158,6 @@ class Device {
     * @return array
     */
     public function getService($id) {
-
         return (array_key_exists($id, $this->services) ? $this->services[$id] : null);
     }
 
@@ -222,8 +220,10 @@ class Device {
     */ 
     public function loadFromCache($uid) {
 
-        $cacheFile = self::getCacheDir() . DIRECTORY_SEPARATOR . $uid;
-
+	//quicky windows hack - remove later
+	    $cacheFile = self::getCacheDir() . DIRECTORY_SEPARATOR . urlencode($uid);
+        //$cacheFile = self::getCacheDir() . DIRECTORY_SEPARATOR . $uid;
+		
         if(file_exists($cacheFile)) {
 
             $data = unserialize(file_get_contents($cacheFile));
@@ -231,12 +231,14 @@ class Device {
             $reflection = new ReflectionClass($data);
 
             $properties = $reflection->getProperties();
-
+			
             foreach($properties as $prop) {
 
                 $name = $prop->name;
 
                 $this->$name = $data->$name;
+				
+
             }
         }
     }

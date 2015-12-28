@@ -140,7 +140,8 @@ class Logger {
 
         $dir = rtrim(self::$logdir, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . date('Y') . DIRECTORY_SEPARATOR . date('m') . DIRECTORY_SEPARATOR . date('d');
 
-        self::createDirectory($dir);
+        //self::createDirectory($dir); //is broken
+		mkdir($dir, 0777, TRUE); // should add some checks
 
         $logfile = $dir . DIRECTORY_SEPARATOR . $filename . '.log';
 
@@ -156,8 +157,9 @@ class Logger {
     * @param string $dir   Directory path
     */
     private static function createDirectory($dir) {
+		
+        if($dir[0] != DIRECTORY_SEPARATOR) $dir = realpath($dir); //!BROKEN sets $dir to false if $dir doesn't exist!
 
-        if($dir[0] != DIRECTORY_SEPARATOR) $dir = realpath($dir);
         $dir = trim(substr($dir, strlen(self::$logdir)), DIRECTORY_SEPARATOR);
 
         $tmp = explode(DIRECTORY_SEPARATOR, $dir);
@@ -165,12 +167,11 @@ class Logger {
         $current = rtrim(self::$logdir, DIRECTORY_SEPARATOR);
 
         foreach($tmp as $directory) {
-
             $current .= DIRECTORY_SEPARATOR . $directory;
-
+			
             if(!file_exists($current)) {
-
-                mkdir($current, 0777);
+				
+               mkdir($current, 0777); 
             }
         }
     }

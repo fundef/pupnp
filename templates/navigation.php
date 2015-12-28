@@ -1,4 +1,4 @@
-<?
+<?php
 $pages = array(
     'index' => _('Workspace'),
     'config' => _('Configuration'),
@@ -10,9 +10,9 @@ $pages = array(
     <div class="container"> 
       <div class="nav-collapse"> 
         <ul class="nav"> 
-            <? foreach($pages as $code => $name): ?>
-                <li><a href="?page=<?= $code ?>"<?= (isset($template) && $template == $code ? ' class="active"' : '') ?>><?= $name ?></a></li>
-            <? endforeach ?>
+            <?php foreach($pages as $code => $name): ?>
+                <li><a href="?page=<?php echo $code ?>"<?php echo (isset($template) && $template == $code ? ' class="active"' : '') ?>><?php echo $name ?></a></li>
+            <?php endforeach ?>
         </ul> 
         <div id="clock"></div>
      </div> 

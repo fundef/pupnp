@@ -44,13 +44,14 @@ class UPnP {
 
         $cacheFile = self::getCacheDir() . DIRECTORY_SEPARATOR . 'devices.serialized';
 
-        if(file_exists($cacheFile)) {
+// temporary hack always return cachefile (copied from WRT)		
+//       if(file_exists($cacheFile)) {
 
             $devices = unserialize(file_get_contents($cacheFile));
-        } else {
+//        } else {
 
-            $devices = self::findDevices();
-        }
+//           $devices = self::findDevices();
+//        }
 
         if(!is_null($service)) {
 

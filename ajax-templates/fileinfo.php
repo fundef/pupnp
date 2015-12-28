@@ -13,20 +13,20 @@ $values = array(
 );
 
 ?>
-<h2><?= $item->title ?></h2>
+<h2><?php echo $item->title ?></h2>
 
-<? if(isset($image)): ?>
-    <img src="resources.php?image=<?= urlencode($image) ?>&w=200" style="float: left; margin-right: 10px; margin-bottom: 10px;" />
-<? endif ?>
+<?php if(isset($image)): ?>
+    <img src="resources.php?image=<?php echo urlencode($image) ?>&w=200" style="float: left; margin-right: 10px; margin-bottom: 10px;" />
+<?php endif ?>
 
 <table>
-<? foreach($values as $key => $value): ?>
-<? if(isset($item->$key) && trim($item->$key != '')): ?>
+<?php foreach($values as $key => $value): ?>
+<?php if(isset($item->$key) && trim($item->$key != '')): ?>
 <tr valign="top">
-    <td><?= $value ?>:</td><td><?= $item->$key ?></td>
+    <td><?php echo $value ?>:</td><td><?php echo $item->$key ?></td>
 </tr>
-<? endif ?>
-<? endforeach ?>
+<?php endif ?>
+<?php endforeach ?>
 </table>
 
 <br class="clear" />

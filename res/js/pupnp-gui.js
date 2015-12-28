@@ -371,7 +371,7 @@ function UPnPGUI() {
 
             $('#device-src, #device-dst').change(function() {
 
-                upnp.filemanager.containerId = 0;
+                upnp.videomanager.containerId = 0;
                 gui.deviceChanged(this);
             });
         
@@ -411,7 +411,7 @@ function UPnPGUI() {
 
     this.loadSourceDevice = function(device) {
 
-        upnp.filemanager.load(device.getUid());
+        upnp.videomanager.load(device.getUid());
     };
 
     this.loadRenderer = function(device) {
@@ -474,43 +474,43 @@ function UPnPGUI() {
 
         var isFavorit = upnp.favorites.isFavorite();
 
-        var navbar = $('<div id="navbar"></div>');
+        // var navbar = $('<div id="navbar"></div>');
 
-        if(Object.keys(upnp.filemanager.breadcrumps).length > 0) {
+        // if(Object.keys(upnp.videomanager.breadcrumps).length > 0) {
 
-            var breadcrumplist = $('<ul id="breadcrumps"></ul>');
-            for(var uid in upnp.filemanager.breadcrumps) {
+            // var breadcrumplist = $('<ul id="breadcrumps"></ul>');
+            // for(var uid in upnp.videomanager.breadcrumps) {
 
-                if(uid != upnp.filemanager.objectId) {
+                // if(uid != upnp.videomanager.objectId) {
 
-                    $(breadcrumplist).append($('<li><a href="javascript:upnp.filemanager.open(\'' + uid + '\');"' + (uid == upnp.filemanager.containerId ? ' class="active"' : '') + '>' + upnp.filemanager.breadcrumps[uid] + '</a></li>'));
-                }
-            }
+                    // $(breadcrumplist).append($('<li><a href="javascript:upnp.videomanager.open(\'' + uid + '\');"' + (uid == upnp.videomanager.containerId ? ' class="active"' : '') + '>' + upnp.videomanager.breadcrumps[uid] + '</a></li>'));
+                // }
+            // }
 
-            $(navbar).append(breadcrumplist);
-        }
+            // $(navbar).append(breadcrumplist);
+        // }
 
-        var favLink = $('<a href="javascript:upnp.favorites.toggle();" id="favorite" title="' + upnp.gui.i18n('Set/Unset as favorite') + '"' + (isFavorit ? ' class="active"' : '') + ' /></a>');
-        $(navbar).append(favLink);
-        $(navbar).append($('<br class="clear" />'));
+        // var favLink = $('<a href="javascript:upnp.favorites.toggle();" id="favorite" title="' + upnp.gui.i18n('Set/Unset as favorite') + '"' + (isFavorit ? ' class="active"' : '') + ' /></a>');
+        // $(navbar).append(favLink);
+        // $(navbar).append($('<br class="clear" />'));
 
-        var html = '<div id="search">';
-        html += '<span>' + this.i18n('Search') + ': </span>';
-        html += '   <input type="text" id="searchbar" value="" />';
-        html += '   <img id="search-enter" src="res/images/icons/keyboard-enter.png" style="display: none;" />';
-        html += '</div>';
+        // var html = '<div id="search">';
+        // html += '<span>' + this.i18n('Search') + ': </span>';
+        // html += '   <input type="text" id="searchbar" value="" />';
+        // html += '   <img id="search-enter" src="res/images/icons/keyboard-enter.png" style="display: none;" />';
+        // html += '</div>';
 
-        html = '<div class="control-group">';
-        html+= '  <div class="controls">';
-        html+= '    <div class="input-prepend">';
-        html+= '      <span class="add-on"><i class="icon-search"></i></span>';
-        html+= '      <input class="span12" id="searchbar" type="text">';
-        html+= '      <img id="search-enter" src="res/images/icons/keyboard-enter.png" style="display: none;" />';
-        html+= '    </div>';
-        html+= '  </div>';
-        html+= '</div>';
+        // html = '<div class="control-group">';
+        // html+= '  <div class="controls">';
+        // html+= '    <div class="input-prepend">';
+        // html+= '      <span class="add-on"><i class="icon-search"></i></span>';
+        // html+= '      <input class="span12" id="searchbar" type="text">';
+        // html+= '      <img id="search-enter" src="res/images/icons/keyboard-enter.png" style="display: none;" />';
+        // html+= '    </div>';
+        // html+= '  </div>';
+        // html+= '</div>';
 
-        var search = $(html);
+        // var search = $(html);
 
         var allowedMimes = [];
 
@@ -519,7 +519,7 @@ function UPnPGUI() {
             allowedMimes = upnp.gui.dstDevice.getProtocols();
         }
 
-        var files = upnp.filemanager.getFiles();
+        var files = upnp.videomanager.getFiles();
 
         var cnt = Object.keys(files).length;
 
@@ -535,7 +535,7 @@ function UPnPGUI() {
                 html += '   <div class="mime">';
                 html += '       <img title="' + file.getClass() + '" alt="' + file.getClass() + '" src="res/images/icons/mime/' + file.getClass() + '.png" />';
                 html += '   </div>';
-                html += '   <a id="item-' + file.getId() + '" href="javascript:upnp.filemanager.' + (file.getType() == 'container' ? 'open' : 'details') + '(\'' + file.getId() + '\');">' + file.getTitle() + '</a>';
+                html += '   <a id="item-' + file.getId() + '" href="javascript:upnp.videomanager.' + (file.getType() == 'container' ? 'open' : 'details') + '(\'' + file.getId() + '\');">' + file.getTitle() + '</a>';
                 html += '   <div class="right">';
 
                 if(file.getClass() == 'object.container.album.musicAlbum') {
@@ -570,28 +570,28 @@ function UPnPGUI() {
                 $(table).append($(html));
             }
 
-            $('#p-src').slideUp('fast', function() {
+ //           $('#p-src').slideUp('fast', function() {
 
                 $('#p-src').empty();
-                $('#p-src').append(navbar);
-                $('#p-src').append(search);
+//                $('#p-src').append(navbar);
+//                $('#p-src').append(search);
                 $('#p-src').append(table);
-                $('#p-src').slideDown('fast', function() {
+                // $('#p-src').slideDown('fast', function() {
 
-                    $('#searchbar').focus();
+                    // $('#searchbar').focus();
 
-                    $('#searchbar').keyup(function(ev) {
+                    // $('#searchbar').keyup(function(ev) {
 
-                        if(ev.keyCode == upnp.KEYCODE_ENTER) {
+                        // if(ev.keyCode == upnp.KEYCODE_ENTER) {
 
-                            upnp.gui.triggerSearchResult();
-                        } else {
+                            // upnp.gui.triggerSearchResult();
+                        // } else {
 
-                            upnp.gui.search($(this).val());
-                        }
-                    });
-                });
-            });
+                            // upnp.gui.search($(this).val());
+                        // }
+                    // });
+                // });
+ //            });
         }
     }
 
@@ -732,7 +732,7 @@ function UPnPGUI() {
             
             if(upnp.gui.dstDevice != null) {
 
-                var file = upnp.filemanager.files[objectId];
+                var file = upnp.videomanager.files[objectId];
                 var allowedMimes = upnp.gui.dstDevice.getProtocols();
 
                 if(in_array(file.getMimeType(), allowedMimes)) {
@@ -744,7 +744,7 @@ function UPnPGUI() {
             $('#fileinfo').html(res);
 
             var html = '<div>';
-            html += '<input type="button" onclick="upnp.filemanager.play(\'' + objectId + '\')" value="' + upnp.gui.i18n('Play') + '"' + (!enabled ? ' disabled="disabled"' : '') + ' />';
+            html += '<input type="button" onclick="upnp.videomanager.play(\'' + objectId + '\')" value="' + upnp.gui.i18n('Play') + '"' + (!enabled ? ' disabled="disabled"' : '') + ' />';
             html += '<input type="button" onclick="upnp.gui.hideFileInfo();" value="' + upnp.gui.i18n('Close') + '" />';
             html += '</div>';
 

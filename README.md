@@ -1,3 +1,13 @@
+PHP/JS DNLNA Fire-and-Forget UI based on pupnp
+==============================================
+
+So far added Search capability
+
+seems to work with: 
+* Pioneer XW-SMA3
+* MiniDLNA (on OpenWRT and OMV)
+
+
 PHP/JS MediaPlayer for UPnP Devices.
 ===================================
 

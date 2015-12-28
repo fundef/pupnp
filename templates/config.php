@@ -70,70 +70,70 @@ if(isset($_POST['save'])) {
 </head>
 <body>
 
-<? require_once(dirname(__FILE__) . '/navigation.php') ?>
+<?php require_once(dirname(__FILE__) . '/navigation.php') ?>
 
 <div id="wrapper-all">
 
-    <? if(isset($error)) echo '<div id="error">' . $error . '</div>'; ?>
+    <?php if(isset($error)) echo '<div id="error">' . $error . '</div>'; ?>
 
     <div class="span12">
-        <h2><?= _('Configuration') ?></h2>
+        <h2><?php echo _('Configuration') ?></h2>
 
-        <?= $flash ?>
+        <?php echo $flash ?>
 
         <form action="" method="post">
             <table class="table table-striped table-config">
-            <? foreach($config as $key => $data): ?>
+            <?php foreach($config as $key => $data): ?>
 
-                <? if(isset($data->hidden)): continue; endif ?>
+                <?php if(isset($data->hidden)): continue; endif ?>
 
                 <tr valign="top">
-                    <td><label for="<?= $key ?>"<?= (!isset($data->null) ? ' class="bold"' : '') ?>><?= $data->name ?></label></td>
+                    <td><label for="<?php echo $key ?>"<?php echo (!isset($data->null) ? ' class="bold"' : '') ?>><?php echo $data->name ?></label></td>
                     <td>
-                        <? switch($data->type): 
+                        <?php switch($data->type): 
 
                             case 'string': ?>
 
-                                <input type="text" name="config[<?= $key ?>]" id="<?= $key ?>"<?= (isset($errors[$key]) ? ' class="error"' : '') ?> value="<?= (isset($_POST['config'][$key]) ? $_POST['config'][$key] : $data->current) ?>" />
-                                <?= (isset($errors[$key]) ? '<div class="error small">' . $errors[$key] . '</div>' : '') ?>
-                                <? break ?>
+                                <input type="text" name="config[<?php echo $key ?>]" id="<?php echo $key ?>"<?php echo (isset($errors[$key]) ? ' class="error"' : '') ?> value="<?php echo (isset($_POST['config'][$key]) ? $_POST['config'][$key] : $data->current) ?>" />
+                                <?php echo (isset($errors[$key]) ? '<div class="error small">' . $errors[$key] . '</div>' : '') ?>
+                                <?php break ?>
 
-                            <? case 'enum': ?>
+                            <?php case 'enum': ?>
 
                                 <ul class="optgroup">
-                                    <? foreach($data->values as $k => $v): ?>
+                                    <?php foreach($data->values as $k => $v): ?>
                                     <li>
-                                        <? $current = (isset($_POST['config'][$key]) ? $_POST['config'][$key] : $data->current); ?>
-                                        <input type="radio" name="config[<?= $key ?>]" id="<?= $key ?>_<?= $k ?>" value="<?= $k ?>"<?= ($current == $k ? ' checked="checked"' : '') ?><?= (isset($errors[$key]) ? ' class="error"' : '') ?>  /> 
-                                        <label for="<?= $key ?>_<?= $k ?>"><?= $v ?></label>
+                                        <?php $current = (isset($_POST['config'][$key]) ? $_POST['config'][$key] : $data->current); ?>
+                                        <input type="radio" name="config[<?php echo $key ?>]" id="<?php echo $key ?>_<?php echo $k ?>" value="<?php echo $k ?>"<?php echo ($current == $k ? ' checked="checked"' : '') ?><?php echo (isset($errors[$key]) ? ' class="error"' : '') ?>  /> 
+                                        <label for="<?php echo $key ?>_<?php echo $k ?>"><?php echo $v ?></label>
                                     </li>
-                                    <? endforeach ?>
+                                    <?php endforeach ?>
                                 </ul>
-                                <?= (isset($errors[$key]) ? '<div class="error small clear">' . $errors[$key] . '</div>' : '') ?>
-                                <? break ?>
+                                <?php echo (isset($errors[$key]) ? '<div class="error small clear">' . $errors[$key] . '</div>' : '') ?>
+                                <?php break ?>
 
-                            <? case 'bool': ?>
+                            <?php case 'bool': ?>
 
-                                <? $current = (isset($_POST['config'][$key]) ? $_POST['config'][$key] : $data->current); ?>
-                                <input type="hidden" name="config[<?= $key ?>]" value="off" />
-                                <input type="checkbox" name="config[<?= $key ?>]" id="<?= $key ?>"<?= ($current == 1 ? ' checked="checked"' : '') ?><?= (isset($errors[$key]) ? ' class="error"' : '') ?> />
-                                <?= (isset($errors[$key]) ? '<div class="error small clear">' . $errors[$key] . '</div>' : '') ?>
-                                <? break ?>
+                                <?php $current = (isset($_POST['config'][$key]) ? $_POST['config'][$key] : $data->current); ?>
+                                <input type="hidden" name="config[<?php echo $key ?>]" value="off" />
+                                <input type="checkbox" name="config[<?php echo $key ?>]" id="<?php echo $key ?>"<?php echo ($current == 1 ? ' checked="checked"' : '') ?><?php echo (isset($errors[$key]) ? ' class="error"' : '') ?> />
+                                <?php echo (isset($errors[$key]) ? '<div class="error small clear">' . $errors[$key] . '</div>' : '') ?>
+                                <?php break ?>
 
-                        <? endswitch ?>
+                        <?php endswitch ?>
                     </td>
                     <td>
-                        <? if(isset($data->desc)): ?>
-                            <a href="javascript://" rel="tooltip" title="<?= htmlspecialchars($data->desc) ?>"><img src="res/images/icons/info.png" /></a>
-                        <? endif ?>
+                        <?php if(isset($data->desc)): ?>
+                            <a href="javascript://" rel="tooltip" title="<?php echo htmlspecialchars($data->desc) ?>"><img src="res/images/icons/info.png" /></a>
+                        <?php endif ?>
                     </td>
                 </tr>
 
-            <? endforeach ?>
+            <?php endforeach ?>
 
             <tr>
                 <td colspan="3" align="right">
-                    <input type="submit" name="save" class="btn btn-inverse" value="<?= _('Save') ?>" style="float: right;" />
+                    <input type="submit" name="save" class="btn btn-inverse" value="<?php echo _('Save') ?>" style="float: right;" />
                 </td>
             </tr>
             </table>
